@@ -52,7 +52,11 @@ create_config() {
 
 	echo "-c" >> $config_file
 	echo "-l ${listen_addr}:${listen_port}" >> $config_file
-	echo "-r ${server_addr}:${server_port}" >> $config_file
+	if [ -z "$(echo ${sever_addr} | grep ":")" ]; then
+		echo "-r ${server_addr}:${server_port}" >> $config_file
+	else
+		echo "-r [${server_addr}]:${server_port}" >> $config_file
+	fi
 
 	[ -n "$raw_mode" ] && echo "--raw-mode ${raw_mode}" >> $config_file
 	[ -n "$key" ] && echo "--key ${key}" >> $config_file
