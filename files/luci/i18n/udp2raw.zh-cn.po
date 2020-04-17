@@ -46,6 +46,9 @@ msgstr "别名"
 msgid "None"
 msgstr "无"
 
+msgid "Forward stdout of the command to logd"
+msgstr "将日志的输出转发到logd（系统日志）"
+
 msgid "Server Address"
 msgstr "服务器地址"
 
@@ -114,6 +117,30 @@ msgstr "源端口"
 
 msgid "Force source-port for Raw Socket, TCP/UDP only."
 msgstr "在原始数据包中强制指定源端口，仅用于 TCP/UDP。"
+
+msgid "Try to fix huge packet caused by GRO. this option is at an early stage."
+msgstr "尝试修复由GRO引起的大数据包。这一选项尚处于初级阶段。"
+
+msgid "Disable Anti-replay"
+msgstr "禁用反重播"
+
+msgid "disable anti-replay,not suggested."
+msgstr "不建议禁用反重播。"
+
+msgid "dev"
+msgstr "绑定接口"
+
+msgid "bind raw socket to a device, not necessary but improves performance. ex:"eth0""
+msgstr "将raw协议绑定到接口，不一定要绑定，但可以提高性能。例如：“eth0”"
+
+msgid "Sock Buf"
+msgstr "接口缓冲区大小"
+
+msgid "buf size for socket,>=10 and <=10240,unit:kbyte,default:1024"
+msgstr "接口缓冲区大小>=10,<=10240之间，单位：KB，默认：1024"
+
+msgid "bypass system limitation while setting sock-buf"
+msgstr "设置sock buf时绕过系统限制"
 
 msgid "Log Level"
 msgstr "日志级别"
