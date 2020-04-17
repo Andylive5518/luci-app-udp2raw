@@ -104,6 +104,7 @@ o = s:option(Flag, "disable_anti_replay", translate("Disable Anti-replay"), tran
 o.default = "0"
 
 o = s:option(Value, "dev", translate("dev"), translate("bind raw socket to a device, not necessary but improves performance. ex:\"eth0\""))
+
 o = s:option(Value, "sock_buf", translate("Sock Buf"), translate("buf size for socket,>=10 and <=10240,unit:kbyte,default:1024"))
 o.datatype = "range(10,10240)"
 o.placeholder = "1024"
