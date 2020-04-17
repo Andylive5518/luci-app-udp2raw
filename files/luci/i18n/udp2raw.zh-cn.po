@@ -130,8 +130,8 @@ msgstr "不建议禁用反重播。"
 msgid "dev"
 msgstr "绑定接口"
 
-msgid "bind raw socket to a device, not necessary but improves performance. ex:"eth0""
-msgstr "将raw协议绑定到接口，不一定要绑定，但可以提高性能。例如：“eth0”"
+msgid "bind raw socket to a device, not necessary but improves performance. ex:\"eth0\""
+msgstr "将raw协议绑定到接口，不一定要绑定，但可以提高性能。例如：\"eth0\""
 
 msgid "Sock Buf"
 msgstr "接口缓冲区大小"
