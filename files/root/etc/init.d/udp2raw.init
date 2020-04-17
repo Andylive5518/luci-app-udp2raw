@@ -71,7 +71,12 @@ create_config() {
 	[ -n "$source_ip" ] && echo "--source-ip ${source_ip}" >> $config_file
 	[ -n "$source_port" ] && echo "--source-port ${source_port}" >> $config_file
 	[ $fix_gro -eq 1 ] && echo "--fix-gro" >> $config_file
+	[ $disable_anti_replay -eq 1 ] && echo "--disable-anti-replay" >> $config_file
 	echo "--retry-on-error" >> $config_file
+
+	[ -n "$dev" ] && echo "--dev ${dev}" >> $config_file
+	[ -n "$sock_buf" ] && echo "--sock-buf ${sock_buf}" >> $config_file
+	[ $force_sock_buf -eq 1 ] && echo "--force-sock-buf" >> $config_file
 
 	[ -n "$log_level" ] && echo "--log-level ${log_level}" >> $config_file
 	echo "--disable-color" >> $config_file
@@ -81,6 +86,7 @@ validate_config_section() {
 	local ret=$(/sbin/validate_data "$NAME" general "$1" \
 		'server:uciname' \
 		'daemon_user:string:root' \
+		'log:bool:0'
 		2> /dev/null)
 	[ $? -ne 0 ] && return 1
 	eval "$ret"
@@ -94,7 +100,7 @@ validate_server_section() {
 		'listen_port:port:2080' \
 		'raw_mode:or("faketcp", "udp", "icmp"):faketcp' \
 		'key:string' \
-		'cipher_mode:or("aes128cbc", "xor", "none"):aes128cbc' \
+		'cipher_mode:or("aes128cfb", "aes128cbc", "xor", "none"):aes128cbc' \
 		'auth_mode:or("hmac_sha1", "md5", "crc32", "simple", "none"):md5' \
 		'auto_rule:bool:1' \
 		'keep_rule:bool:0' \
@@ -103,6 +109,10 @@ validate_server_section() {
 		'source_ip:ipaddr' \
 		'source_port:port' \
 		'fix_gro:bool:1' \
+		'disable_anti_replay:bool:0' \
+		'dev:string' \
+		'sock_buf:range(10,10240)' \
+		'force_sock_buf:bool:0' \
 		'log_level:range(0,6)' \
 		2> /dev/null)
 	[ $? -ne 0 ] && return 1

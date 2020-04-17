@@ -8,16 +8,28 @@ local raw_modes = {
 }
 
 local cipher_modes = {
+	"aes128cfb",
 	"aes128cbc",
 	"xor",
 	"none",
 }
 
 local auth_modes = {
+	"hmac_sha1",
 	"md5",
 	"crc32",
 	"simple",
 	"none",
+}
+
+local log_level = {
+	"never",
+	"fatal",
+	"error",
+	"warn",
+	"info",
+	"debug",
+	"trace",
 }
 
 m = Map("udp2raw", "%s - %s" %{translate("udp2raw-tunnel"), translate("Edit Server")})
@@ -85,8 +97,22 @@ o.datatype = "ipaddr"
 o = s:option(Value, "source_port", translate("Source-Port"), translate("Force source-port for Raw Socket, TCP/UDP only."))
 o.datatype = "port"
 
-o = s:option(Value, "log_level", translate("Log Level"))
-o.datatype = "range(0,6)"
-o.placeholder = "4"
+o = s:option(Flag, "fix_gro", translate("Fix GRO"), translate("Try to fix huge packet caused by GRO. this option is at an early stage."))
+o.default = "0"
+
+o = s:option(Flag, "disable_anti_replay", translate("Disable Anti-replay"), translate("disable anti-replay,not suggested."))
+o.default = "0"
+
+o = s:option(Value, "dev", translate("dev"), translate("bind raw socket to a device, not necessary but improves performance. ex:\"eth0\""))
+o = s:option(Value, "sock_buf", translate("Sock Buf"), translate("buf size for socket,>=10 and <=10240,unit:kbyte,default:1024"))
+o.datatype = "range(10,10240)"
+o.placeholder = "1024"
+
+o = s:option(Flag, "force_sock_buf", translate("Force Sock Buf"), translate("bypass system limitation while setting sock-buf"))
+o.default = "0"
+
+o = s:option(ListValue, "log_level", translate("Log Level"))
+for k, v in ipairs(log_level) do o:value(k-1, "%s:%s" %{k-1, v:lower()}) end
+o.default = "4"
 
 return m
